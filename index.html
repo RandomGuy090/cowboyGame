@@ -1,0 +1,218 @@
+<!-- Jakub Maciejczyk -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Kowboje</title>
+	<script type="text/javascript" src="assets.js" defer></script>
+	<script type="text/javascript" src="gra.js" defer></script>
+	<style type="text/css">
+		*{
+			background-color: black;
+			/*color:#48ff48;*/
+			
+		}
+		.player{
+		color:#48ff48;
+		}
+		.playerLeft{
+			/*color: blue;*/
+			float: left;
+			margin-left: 5vw;
+		}
+		.playerRight{
+			/*color: red;*/
+			float: left;
+			margin-left: 10vw;
+			margin-right: 10vw;
+		}
+		.scene{
+			font-size: 2vw;
+
+			height: 55vh;
+			width: 80vw;
+			margin-left: 10vw;
+			margin-top: -60vh;
+
+		}
+		.cactus1{
+			float: left;
+			margin-top: 5vh;
+			margin-left: -9vw;
+			font-size: 1vw;
+			color:#48ff48;
+		}
+		.cactus2{
+			margin-top: 
+			float: left;
+			font-size: 1.7vw;
+			color:#48ff48;
+		}
+		#sceneBackground{
+			font-size: 2.2vw;
+			margin-left: 0;
+			margin-top: -5vh;
+			z-index: -1;
+			color: #92741d;
+		}
+		.menu{
+			margin-top: 1vh;
+			height: 13vh;
+			width: 95vw;
+			border: 1px solid green;
+			padding: 1.3vw;
+		}
+		.fireButton{
+			
+			border: 1px solid color: #48ff48;
+			height: 16vh;
+			width: 20%;
+			text-align: center;
+			font-size: 4vh;
+			/*color: #48ff48;*/
+
+		}
+		.fireButton:hover{
+			cursor: pointer;
+		}
+		
+		#fireButtonLeft{
+			float: left;
+		}
+		#fireButtonRight{
+			float: right;
+			
+		}
+		#countdown{
+			color: red;
+			font-size: 3vh;
+			height: 2vh;
+			width: 15vw;
+			margin-left: 70vh;
+
+			z-index: 0;
+		}
+		.menuButton{
+			font-size: 1.5vh;
+		}
+		#rightButton{
+			float:right;
+			/*color: red;*/
+			width: 20vw;
+
+		}
+		#leftButton{
+			float:left;
+			/*color: blue;*/
+			width: 20vw;
+		}
+
+	</style>
+
+</head>
+<body>
+	<div id="countdown">
+
+	</div>
+
+<div id="sceneBackground" >
+	<pre>
+                                                       _____
+                                                     /'_____`\
+  __                                            ___/' /       `\
+/' _`\_                                       /'         \  ____\
+\ /    \____________________________________/'             /     `\__  __
+
+
+   ` `       ``           ``    ~     `                  `   `        
+. . ..       . . . .,.    . ,,  ,    . , ,. .    .      .   ,.. .  
+  .  ,     
+                        \/     .   \  /.._ _..--  .       .  .. . . .  ,
+. \/             .   \/     .  \ ..__..--  . | \/  .  ..     , , , ,
+   __...  ..__..__       .     \/  \/..__..--  .  \/  .  ..  .  | . 
+\/  .   .    \/     \/    __..--..  \/..__..--  . \/  .  .. 
+</pre>
+
+
+
+	<div class="scene">
+	   <div class="cactus1">
+<pre>
+
+                /||\
+                ||||
+                ||||
+                |||| /|\
+           /|\  |||| |||
+           |||  |||| |||
+           |||  |||| |||
+           |||  |||| d||
+           |||  |||||||/
+           ||b._||||~~'
+           \||||||||
+            `~~~||||
+                ||||
+                ||||
+                ||||
+
+
+
+</pre>
+	   </div>
+
+
+	   <div id="playerLeft" class="player">
+
+
+	   </div><div id="playerRight"class="player" >
+
+	   </div>
+
+	   <div class="cactus2">
+<pre>
+
+      /'\
+      |`|
+   _  |'|  _
+  /.\ |`| /,\
+  |'(_|.|_).|
+  \.'`.'`.`'/
+   `--.'.--'
+      |.|
+      |`|
+      |.|
+
+</pre>
+	   </div>
+ 
+ </div>
+ <div class="menu">
+ 		<div id="leftButton">
+ 		<pre class="menuButton" id="leftButton">
+  _     ____  _   _ ___ _____ _____ 
+ | |   / ___|| | | |_ _|  ___|_   _|
+ | |   \___ \| |_| || || |_    | |  
+ | |___ ___) |  _  || ||  _|   | |  
+ |_____|____/|_| |_|___|_|     |_|  
+                                    
+ 		</pre>
+ 		</div>
+ 	
+
+ 	<div id="rightButton">
+ 		<pre class="menuButton" id="rightButton">
+  _____ _   _ _____ _____ ____  
+ | ____| \ | |_   _| ____|  _ \ 
+ |  _| |  \| | | | |  _| | |_) |
+ | |___| |\  | | | | |___|  _ < 
+ |_____|_| \_| |_| |_____|_| \_\
+
+ 		</pre>
+ 	</div>
+ </div>
+
+</div>
+
+
+</body>
+
+</html>
