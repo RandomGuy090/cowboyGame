@@ -11,6 +11,7 @@ colorButtons("leftButton", player1Color);
 colorButtons("rightButton", player2Color);
 
 document.addEventListener('keydown', function(event) {
+	console.log(event.keyCode);
     if(event.keyCode == 16) {
     	//playerRight
     	playerShot(1);
@@ -26,11 +27,34 @@ document.addEventListener('keydown', function(event) {
 
 //INIT
 window.onload = function() {
-	showCowboys();
+	
+	showCowboys(1);
+	replaceKeyboard("ENTR", "red");
+	replaceKeyboard(" |^|", "#3095ff");
 
-	cutdown();
+	
 }
 //
+startGameTrigger.onclick = () =>{
+	var node = document.getElementById("startMenu");
+  	while (node.firstChild) {
+    	node.removeChild(node.lastChild);
+  	}
+  	node.remove();
+	showCowboys();
+	cutdown();
+
+}
+
+function replaceKeyboard(key, colorChar){
+	const colorBlink = document.querySelectorAll("#menuKeyboard");
+
+	for (const color of colorBlink) {
+	  color.innerHTML = color.innerHTML
+	    .replaceAll(key, '<span class="blinker" style="color: '+ colorChar+';">'+ key+'</span>');
+	}
+}
+
 
 function replace(str){
 	str = str.replaceAll("*","`");
@@ -39,9 +63,14 @@ function replace(str){
 	return str;
 }
 
-function showCowboys(){
-	playerLeft = document.querySelector("#playerLeft");
-	playerRight = document.querySelector("#playerRight");
+function showCowboys(elem=null){
+	if (elem==null){
+		playerLeft = document.querySelector("#playerLeft");
+		playerRight = document.querySelector("#playerRight");
+	}else{
+		playerLeft = document.querySelector("#menuPlayerLeft");
+		playerRight = document.querySelector("#menuPlayerRight");
+	}
 
 	playerLeft.insertAdjacentHTML("beforeend",replace(playerOne[1]));
 	playerRight.insertAdjacentHTML("beforeend",replace(playerTwo[1]));	
