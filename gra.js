@@ -1,50 +1,192 @@
-var player1Color = "blue";
-var player2Color = "red";
-var playerLeft = document.querySelector("#playerLeft");
-var playerRight = document.querySelector("#playerRight");
+// default player colors
+var player1Color = "pink";
+var player2Color = "yellow";
+var player1Colorpicker = document.getElementById("player1color");
+var player2Colorpicker = document.getElementById("player2color");
+//players var for object
+var playerLeft = null;
+var playerRight = null;
 
 var milisec = 0;
-var shotPass = false;
-var timeOut = false;
+// can I shoot rn?
+var shootPass = true;
 
-colorButtons("leftButton", player1Color);
-colorButtons("rightButton", player2Color);
+
+class Player{
+	color = null;
+	assets = null;
+
+
+	constructor(assets, color){
+		this.color = color;
+		this.assets = assets;	
+		return true
+	}
+
+	id(){
+		var start = this.assets[1].indexOf('id="')+4;
+		var end = this.assets[1].indexOf('>')-1;
+		var id = this.assets[1].substring(start, end);
+		return id;
+	}
+	showReady(parentDiv){
+
+		var player = document.querySelector(parentDiv);
+
+		if (player.childNodes["length"] > 1){
+			return false
+		}	
+		player.insertAdjacentHTML("beforeend",replace(this.assets[1]));	
+		document.getElementById(this.id()).style = "color: " + this.color;
+		
+	}
+	showShot(parentDiv){
+			//Player.showShot("#playerRight"); to run propertly
+		var id = this.id()
+		var player = document.querySelector(parentDiv);	
+
+		document.querySelector("#"+this.id()).remove()
+		player.insertAdjacentHTML("beforeend",replace(this.assets[0]));
+		document.getElementById(id).style = "color: "+ this.color;
+
+
+	}
+	showKilled(parentDiv){
+			//Player.showShot("#playerRight"); to run propertly
+		var id = this.id()
+		var player = document.querySelector(parentDiv);
+		
+		document.querySelector("#"+this.id()).remove()
+
+		player.insertAdjacentHTML("beforeend",replace(this.assets[2]));
+		document.getElementById(id).style = "color: "+ this.color;
+			
+
+	}
+	delete(parentDiv){
+		var node = document.querySelector(parentDiv);
+	  	while (node.lastChild) {
+	    	node.removeChild(node.lastChild);
+	  	}
+
+
+	}
+
+}
+
+
+
 
 document.addEventListener('keydown', function(event) {
 	console.log(event.keyCode);
     if(event.keyCode == 16) {
-    	//playerRight
-    	playerShot(1);
-    	shotPass = true;
+  		if (!shootPass){
+	 	    playerLeft.showShot("#playerLeft");
+	    	playerRight.showKilled("#playerRight");
+	    	colorButtons("leftButton", playerLeft.color, "pressed");
+	    	shootPass = true;
+    	}
 
     }
     else if(event.keyCode == 13) {
-    	//playerLeft
-    	playerShot(2);
-    	shotPass = true;
+    	if (!shootPass){
+	    	playerRight.showShot("#playerRight");
+	    	playerLeft.showKilled("#playerLeft");
+	    	colorButtons("rightButton", playerRight.color, "pressed");
+	    	shootPass = true;
+    	}
     }
 });
 
 //INIT
 window.onload = function() {
 	
-	showCowboys(1);
-	replaceKeyboard("ENTR", "red");
-	replaceKeyboard(" |^|", "#3095ff");
+	playerLeft = new Player(playerOne, player1Color);
+	playerRight = new Player(playerTwo, player2Color);
+	colorButtons("leftButton", player1Color);
+	colorButtons("rightButton", player2Color);
+	document.getElementById("menuPlayerLeftPre").style = "color: "+ player1Color+"; float: left;";
+	document.getElementById("menuPlayerRightPre").style = "color: "+ player2Color+"; float: right;";
+
+
+
+	showCowboys("#menuPlayerLeft","#menuPlayerRight");
+	replaceKeyboard("ENTR", player2Color);
+	replaceKeyboard(" |^|", player1Color);
 
 	
 }
-//
+
+//color picker
+
+menuPlayerLeftPre.onclick = () =>{
+	var inp = document.getElementById("player1color");
+	inp.focus();
+	inp.click();
+
+	player1Color = inp.value
+}
+menuPlayerRightPre.onclick = () =>{
+	var inp = document.getElementById("player2color");
+	inp.focus();
+	inp.click();
+
+	player1Color = inp.value
+}
+
+
+
+
+
+player1Colorpicker.addEventListener('change', (event) => {
+  	player1Color = player1Colorpicker.value;
+	document.querySelector("#player1").remove()
+	
+	playerLeft.delete("#menuPlayerLeft");
+	playerLeft = new Player(playerOne, player1Colorpicker.value);
+	playerLeft.showReady("#menuPlayerLeft");
+
+	colorUpdate(1); 
+});
+
+
+player2Colorpicker.addEventListener('change', (event) => {
+  	player2Color = player2Colorpicker.value;
+	document.querySelector("#player2").remove()
+	
+	playerRight.delete("#menuPlayerRight");
+	playerRight = new Player(playerTwo, player2Colorpicker.value);
+	playerRight.showReady("#menuPlayerRight");
+
+	colorUpdate(2); 
+});
+
+function colorUpdate(player){
+	if(player == 1 ){
+	replaceKeyboard(" |^|", player1Color);
+	document.getElementById("menuPlayerLeftPre").style = "color: "+ player1Color+"; float: left;";
+	colorButtons("leftButton", player1Color);
+}else{
+	replaceKeyboard("ENTR", player2Color);
+	document.getElementById("menuPlayerRightPre").style = "color: "+ player2Color+"; float: right;";
+	colorButtons("rightButton", player2Color);
+}
+}
+
+
+
+// after closing menu
 startGameTrigger.onclick = () =>{
 	var node = document.getElementById("startMenu");
   	while (node.firstChild) {
     	node.removeChild(node.lastChild);
   	}
   	node.remove();
-	showCowboys();
-	cutdown();
+	showCowboys("#playerLeft", "#playerRight");
+	counter();
 
 }
+
 
 function replaceKeyboard(key, colorChar){
 	const colorBlink = document.querySelectorAll("#menuKeyboard");
@@ -63,24 +205,13 @@ function replace(str){
 	return str;
 }
 
-function showCowboys(elem=null){
-	if (elem==null){
-		playerLeft = document.querySelector("#playerLeft");
-		playerRight = document.querySelector("#playerRight");
-	}else{
-		playerLeft = document.querySelector("#menuPlayerLeft");
-		playerRight = document.querySelector("#menuPlayerRight");
-	}
-
-	playerLeft.insertAdjacentHTML("beforeend",replace(playerOne[1]));
-	playerRight.insertAdjacentHTML("beforeend",replace(playerTwo[1]));	
-
-	document.getElementById("player1").style = "color: "+ player1Color;
-	document.getElementById("player2").style = "color: "+ player2Color;
+function showCowboys(div1, div2){
+	playerLeft.showReady(div1);
+	playerRight.showReady(div2);
 
 }
 
-function cutdown(){
+function counter(){
 	var count = document.querySelector("#countdown");
 
 	for (var i=0; i<= countdown.length; i++) {
@@ -93,8 +224,7 @@ function cutdown(){
 			}
 				count.insertAdjacentHTML("beforeend",replace(countdown[countdown.length-i]));
 	  			if(countdown.length == i){
-	  				timeOut = true;
-
+	  				shootPass = false;
 					milisec = Date.now() |0
 					console.log(milisec);
 	  			}
@@ -103,63 +233,6 @@ function cutdown(){
 	}
 }
 
-function afterCount(){
-	document.querySelector("#player1").remove()
-	document.querySelector("#player2").remove()
-
-	playerLeft.insertAdjacentHTML("beforeend",replace(playerOne[0]));
-	playerRight.insertAdjacentHTML("beforeend",replace(playerTwo[0]));	
-
-	
-}
-
-
-function playerShot(player){
-
-	var xD = Date.now() |0
-	console.log(xD);
-	milisec = xD - milisec
-	
-	
-
-	if(player == 1){
-		if(timeOut == true && shotPass == false){
-			
-			console.log("LSHIFT");
-
-			document.querySelector("#player1").remove()
-			document.querySelector("#player2").remove()
-
-			playerLeft.insertAdjacentHTML("beforeend",replace(playerOne[0]));
-			playerRight.insertAdjacentHTML("beforeend",replace(playerTwo[2]));
-			
-			document.getElementById("playerLeft").style = "color: "+ player1Color;
-			document.getElementById("playerRight").style = "color: "+ player2Color;
-
-
-			colorButtons("leftButton", player1Color, "pressed");
-
-		}
-	}else if(player == 2){
-		if(timeOut == true && shotPass == false){
-
-		console.log("enter");
-		document.querySelector("#player1").remove();
-		document.querySelector("#player2").remove();
-
-		playerLeft.insertAdjacentHTML("beforeend",replace(playerOne[2]));
-		playerRight.insertAdjacentHTML("beforeend",replace(playerTwo[0]));
-
-		document.getElementById("playerLeft").style = "color: "+ player1Color;
-		document.getElementById("playerRight").style = "color: "+ player2Color;
-		
-		colorButtons("rightButton", player2Color, "pressed");
-
-
-		}
-
-	}
-}
 
 function colorButtons(buttnId, color, status=0){
 

@@ -130,9 +130,16 @@
 			animation: blinker 1s linear infinite;
 		}
 		@keyframes blinker {
+		  100% {
+		    opacity: 1;
+		  }
 		  50% {
 		    opacity: 0;
 		  }
+		  0% {
+		    opacity: 1;
+		  }
+
 		}
 		.playArrow{
 			float: right; 
@@ -141,6 +148,20 @@
 		}
 		.playArrow:hover{
 			cursor: pointer;
+		}
+		#player1color{
+			height: 1px;
+			float:left;
+			margin-top: 15vh;
+			width: 1px; 
+			border-style: none;
+		}
+		#player2color{
+			height: 1px;
+			float:right;
+			margin-top: 15vh;
+			width: 1px; 
+			border-style: none;
 		}
 
 	</style>
@@ -251,30 +272,39 @@
 
 <div id="startMenu">
 	<div>
-		<pre class="menuPlayerPre" style="float: left;">
+
+		<input type="color"   id="player1color"/>
+
+		<pre class="menuPlayerPre" id="menuPlayerLeftPre" style="float: left;">
    ___ _                         _ 
   / _ \ | __ _ _   _  ___ _ __  / |
  / /_)/ |/ _` | | | |/ _ \ '__| | |
 / ___/| | (_| | |_| |  __/ |    | |
 \/    |_|\__,_|\__, |\___|_|    |_|
                |___/     
-		</pre>
+    click to change color!
 
 
-		<pre class="menuPlayerPre" style="float: right;">
+</pre>
+
+		
+
+<input type="color"   id="player2color"/>
+
+		<pre class="menuPlayerPre" id="menuPlayerRightPre" style="float: right;">
    ___ _                         ____  
   / _ \ | __ _ _   _  ___ _ __  |___ \ 
  / /_)/ |/ _` | | | |/ _ \ '__|   __) |
 / ___/| | (_| | |_| |  __/ |     / __/ 
 \/    |_|\__,_|\__, |\___|_|    |_____|
-               |___/                  
-		</pre></div>
-
+               |___/               
+click to change color!</pre></div>
 
 
 	<div class="menuPlayerPanel" style="margin-top:15vh">
 		
 		<div id=menuPlayerLeft></div>
+
 	</div>
 
 

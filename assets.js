@@ -2,7 +2,7 @@
    \\ = \
 */
 var playerOne = [`
-<pre class="playerLeft" class="player">
+<pre class="playerLeft" id="player1">
 
 __[-]___        
   ( )     ___  
