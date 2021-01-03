@@ -1,7 +1,7 @@
 // default player colors
 var player1Color = "pink";
 var player2Color = "yellow";
-readColorCookie();
+
 var player1Colorpicker = document.getElementById("player1color");
 var player2Colorpicker = document.getElementById("player2color");
 //players var for object
@@ -15,12 +15,7 @@ var shootPass = true;
 var endMenuVisible = false;
 
 
-function readColorCookie(){
-	var x = document.cookie;
-	console.log(x);
-	console.log(x);
 
-}
 
 class Player{
 	color = null;
@@ -96,7 +91,12 @@ document.addEventListener('keydown', function(event) {
 	    	playerRight.showKilled("#playerRight");
 	    	colorButtons("leftButton", playerLeft.color, "pressed");
 	    	shootPass = true;
-			insertTime("2.137");
+	    	
+	    	milisec2 = Date.now() |0
+			milisec = milisec2 - milisec;
+			console.log(milisec);
+			milisec = milisec.toString()
+	    	insertTime(milisec);
     	}
 
     }
@@ -106,7 +106,12 @@ document.addEventListener('keydown', function(event) {
 	    	playerLeft.showKilled("#playerLeft");
 	    	colorButtons("rightButton", playerRight.color, "pressed");
 	    	shootPass = true;
-	    	insertTime("2.137");
+	    	
+	    	milisec2 = Date.now() |0
+			milisec = milisec2 - milisec;
+			console.log(milisec);
+			milisec = milisec.toString()
+	    	insertTime(milisec);
 
 
     	}
@@ -164,10 +169,6 @@ player1Colorpicker.addEventListener('change', (event) => {
 
 	colorUpdate(1); 
 
-	//document.cookie = "player1Color="+ player1color+"; player2color="+player2color+";";
-	document.cookie = "player1Color="+ player1color+"; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-
 
 });
 
@@ -181,8 +182,7 @@ player2Colorpicker.addEventListener('change', (event) => {
 	playerRight.showReady("#menuPlayerRight");
 
 	colorUpdate(2); 
-	//document.cookie = "player1Color="+ player1color+"; player2color="+player2color+";";
-	document.cookie = "player2Color="+ player2color+"; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	
 });
 
 function colorUpdate(player){
@@ -274,24 +274,52 @@ function colorButtons(buttnId, color, status=0){
 
 function insertTime(time){
 
-	if (endMenuVisible == false) {
+	if (time.length>3){
+		switch (time.length){
+			case 4:
+				time2 = time.substring(0, 1) + "." + time.substring(1);
+				time = time2;
+				break;
+			case 5:
+				time = time.substring(0, 2) + "." + time.substring(2);
+				break;	
+			case 6:
+				time = time.substring(0, 3) + "." + time.substring(3);
+				break;	
+		
+		}
+	time = time.substring(0,5);
+	time += "s";
+	}else{
+		
+
+		time += "ms";
+	}
 	console.log(time);
+	console.log(time);
+	if (endMenuVisible == false) {
+		console.log(time);
 		endMenuVisible = true;
 		var area = document.querySelector("#endMenuTimeShow");
 		arr = Array();
 		for(i=0;i<time.length;i++){
-			if(time[i] != "."){
-				area.insertAdjacentHTML("beforeend",replace(digits[time[i]]));
-			}else{
+			if(time[i] == "."){
 				area.insertAdjacentHTML("beforeend",replace(digits[10]));
+			}else if(time[i] == "m"){
+				area.insertAdjacentHTML("beforeend",replace(digits[11]));
+			}else if(time[i] == "s"){
+				area.insertAdjacentHTML("beforeend",replace(digits[12]));
+			
+			}else{
+				area.insertAdjacentHTML("beforeend",replace(digits[time[i]]));
 			}
 		}
-
 		var menu = document.querySelector(".endMenu")
 		menu.classList.add("endMenuAppear");
 		menu.style = "z-index: 11;";
 		document.documentElement.style.setProperty("--endMenuColor", "#48ff48");
-		console.log("arr");
+		
+
 
 
 	}

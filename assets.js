@@ -158,11 +158,12 @@ var digits = [
  |____/  
 </pre>
 `,`<pre class="digits">
+    _
    / /   
   / /_   
  | %_ \\  
  | (_) | 
-  \\___/_ 
+  \\___/
 </pre>
 `,`<pre class="digits">
   ______
@@ -193,11 +194,25 @@ var digits = [
 
 
 
-
  _
 (_)
 </pre>
-`,
-         
+`,`<pre class="digits">
+            
+
+  _ __ ___  
+ | '_   _ \\ 
+ | | | | | |
+ |_|_|_| |_|
+</pre>
+`,`<pre class="digits">
+
+
+  ___
+ / __|      
+ \\__ \\      
+ |___/ 
+</pre>
+`
 
 ]
