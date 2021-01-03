@@ -1,6 +1,7 @@
 // default player colors
 var player1Color = "pink";
 var player2Color = "yellow";
+readColorCookie();
 var player1Colorpicker = document.getElementById("player1color");
 var player2Colorpicker = document.getElementById("player2color");
 //players var for object
@@ -10,7 +11,16 @@ var playerRight = null;
 var milisec = 0;
 // can I shoot rn?
 var shootPass = true;
+//
+var endMenuVisible = false;
 
+
+function readColorCookie(){
+	var x = document.cookie;
+	console.log(x);
+	console.log(x);
+
+}
 
 class Player{
 	color = null;
@@ -79,12 +89,14 @@ class Player{
 
 document.addEventListener('keydown', function(event) {
 	console.log(event.keyCode);
+
     if(event.keyCode == 16) {
   		if (!shootPass){
 	 	    playerLeft.showShot("#playerLeft");
 	    	playerRight.showKilled("#playerRight");
 	    	colorButtons("leftButton", playerLeft.color, "pressed");
 	    	shootPass = true;
+			insertTime("2.137");
     	}
 
     }
@@ -94,8 +106,12 @@ document.addEventListener('keydown', function(event) {
 	    	playerLeft.showKilled("#playerLeft");
 	    	colorButtons("rightButton", playerRight.color, "pressed");
 	    	shootPass = true;
+	    	insertTime("2.137");
+
+
     	}
     }
+
 });
 
 //INIT
@@ -147,6 +163,12 @@ player1Colorpicker.addEventListener('change', (event) => {
 	playerLeft.showReady("#menuPlayerLeft");
 
 	colorUpdate(1); 
+
+	//document.cookie = "player1Color="+ player1color+"; player2color="+player2color+";";
+	document.cookie = "player1Color="+ player1color+"; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+
+
 });
 
 
@@ -159,6 +181,8 @@ player2Colorpicker.addEventListener('change', (event) => {
 	playerRight.showReady("#menuPlayerRight");
 
 	colorUpdate(2); 
+	//document.cookie = "player1Color="+ player1color+"; player2color="+player2color+";";
+	document.cookie = "player2Color="+ player2color+"; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 });
 
 function colorUpdate(player){
@@ -246,4 +270,33 @@ function colorButtons(buttnId, color, status=0){
 	}
 
 }
+
+
+function insertTime(time){
+
+	if (endMenuVisible == false) {
+	console.log(time);
+		endMenuVisible = true;
+		var area = document.querySelector("#endMenuTimeShow");
+		arr = Array();
+		for(i=0;i<time.length;i++){
+			if(time[i] != "."){
+				area.insertAdjacentHTML("beforeend",replace(digits[time[i]]));
+			}else{
+				area.insertAdjacentHTML("beforeend",replace(digits[10]));
+			}
+		}
+
+		var menu = document.querySelector(".endMenu")
+		menu.classList.add("endMenuAppear");
+		menu.style = "z-index: 11;";
+		document.documentElement.style.setProperty("--endMenuColor", "#48ff48");
+		console.log("arr");
+
+
+	}
+}
+
+
+
 

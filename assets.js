@@ -108,5 +108,96 @@ var countdown = [`<pre class="count">
 `];
 
 
+var digits = [
+`<pre class="digits">
+   ___
+  / _ \\  
+ | | | | 
+ | | | | 
+ | |_| | 
+  \\___/  
+</pre>
+`,   
+ `<pre class="digits">  __     
+ /_ |    
+  | |    
+  | |    
+  | |    
+  |_|    
+
+</pre>
+`,`<pre class="digits">  ___
+ |__ \\   
+    ) |  
+   / /   
+  / /_   
+ |____|  
+ </pre>
+`,`<pre class="digits">
+  ____
+ |___ \\  
+   __) | 
+  |__ <  
+  ___) | 
+ |____/  
+ </pre>
+`,`<pre class="digits">
+  _  _ 
+ | || |  
+ | || |_ 
+ |__   _|
+    | |  
+    |_|  
+    </pre>
+`,`<pre class="digits">
+  _____
+ | ____| 
+ | |__   
+ |___ \\  
+  ___) | 
+ |____/  
+</pre>
+`,`<pre class="digits">
+   / /   
+  / /_   
+ | %_ \\  
+ | (_) | 
+  \\___/_ 
+</pre>
+`,`<pre class="digits">
+  ______
+ |____  |
+     / / 
+    / /  
+   / /   
+  /_/ 
+  </pre>
+`,`<pre class="digits">
+   ___
+  / _ \\  
+ | (_) | 
+  > _ <  
+ | (_) | 
+  \\___/  
+   </pre>
+`,`<pre class="digits">
+   ___
+  / _ \\  
+ | (_) | 
+  \\__, | 
+    / /  
+   /_/   
+   </pre>
+`,`<pre class="digits">
 
 
+
+
+
+ _
+(_)
+</pre>
+`,
+         
+
+]

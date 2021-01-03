@@ -6,6 +6,11 @@
 	<script type="text/javascript" src="assets.js" defer></script>
 	<script type="text/javascript" src="gra.js" defer></script>
 	<style type="text/css">
+		:root{
+			--endMenuColor: #48ff48;
+			/*--endMenuColor: #000000;*/
+		}
+
 		*{
 			background-color: black;
 			/*color:#48ff48;*/
@@ -16,7 +21,7 @@
 		z-index: 1;
 		}
 		.playerLeft{
-			/*color: blue;*/
+			
 			float: left;
 			margin-left: 5vw;
 		}
@@ -121,6 +126,7 @@
 			 margin-left: 20vw;
 		}
 		.menuPlayerPre{
+			margin-top: 15vh;
 			width: 20vw;
 			font-size: 1.5vh;
 			color: #48ff48;
@@ -129,26 +135,20 @@
 		.blinker{
 			animation: blinker 1s linear infinite;
 		}
-		@keyframes blinker {
-		  100% {
-		    opacity: 1;
-		  }
-		  50% {
-		    opacity: 0;
-		  }
-		  0% {
-		    opacity: 1;
-		  }
-
-		}
+		
 		.playArrow{
 			float: right; 
 			color:#48ff48; 
 			font-size: 6vh;
+			margin-right: 5vw;
+			background-color: transparent;
+			
 		}
 		.playArrow:hover{
 			cursor: pointer;
+			animation: revolver 1s linear infinite;
 		}
+		
 		#player1color{
 			height: 1px;
 			float:left;
@@ -164,10 +164,100 @@
 			border-style: none;
 		}
 
+		.endMenu{
+			position: fixed;
+			z-index: -99;
+			height: 65vh;
+
+			width: 60vw;
+			background-color: black;
+			margin-top: -75vh;
+			/*margin-top: 20vh;*/
+			margin-bottom: 20vh;
+			margin-left: 20vw;
+			margin-right: 20vw;
+			border: 1px solid var(--endMenuColor);
+		}
+		#endMenuTime{
+			position: relative;
+			height: 30%;
+			width: 40%;
+			margin-left: 30%;
+			margin-right: auto;
+			background: black;
+			border: 1px solid var(--endMenuColor);
+			color: white;
+
+		}
+		#endMenuTimeShow{
+			position: relative;
+			margin-left: 4vw;
+		}
+		.digits{
+			position: relative;
+			float: left;
+			color: var(--endMenuColor);
+
+			/*border: 1px solid red;*/
+			font-size: 1.3vh;
+		}
+		#reactionTime{
+			position: relative;
+			padding-top: 0;
+			margin-top: 0;
+			margin-left: 2vw;
+			float: left;
+			background-color: transparent;
+			color: var(--endMenuColor);
+			font-size: 1vh;
+
+		}
+		.endMenuAppear{
+			animation: menuAppear 2s linear ;
+		}
+		@keyframes menuAppear {
+			0% {
+				margin-top: 20vh;
+			}
+			50% {
+				margin-top: 20vh;
+			}
+			100% {
+				margin-top: -75vh;
+
+			}
+		}
+
+		@keyframes revolver {
+		  0% {
+		  	transform: rotateZ(0deg);		  
+		  }
+		  8% {
+		    transform: rotateZ(-30deg);		  
+		  }
+		  70% {
+		    transform: rotateZ(0deg);		  
+			}
+
+		@keyframes blinker {
+		  100% {
+		    opacity: 1;
+		  }
+		  50% {
+		    opacity: 0;
+		  }
+		  0% {
+		    opacity: 1;
+		  }
+
+			}
+		
+
 	</style>
 
 </head>
 <body>
+	
 	<div id="countdown">
 
 	</div>
@@ -178,7 +268,7 @@
                                                      /'_____`\
   __                                            ___/' /       `\
 /' _`\_                                       /'         \  ____\
-\ /    \____________________________________/'             /     `\__  __
+\ /    \  _ ________________________________/'             /     `  _  __
 
 
    ` `       ``           ``    ~     `                  `   `        
@@ -218,10 +308,10 @@
 	   </div>
 
 
-	   <div id="playerLeft" class="player">
+	   <div id="playerLeft" class="player" >
 
 
-	   </div><div id="playerRight"class="player" >
+	   </div><div id="playerRight"class="player"  >
 
 	   </div>
 
@@ -303,7 +393,7 @@ click to change color!</pre></div>
 
 	<div class="menuPlayerPanel" style="margin-top:15vh">
 		
-		<div id=menuPlayerLeft></div>
+		<div id=menuPlayerLeft style="margin-top: 27vh;"></div>
 
 	</div>
 
@@ -334,11 +424,32 @@ click to change color!</pre></div>
 
 	</div>
 	<div  class="playArrow" id="startGameTrigger">
-		<pre style="float:right;  ">
---->
+		<pre style="float:right;  ">  _____.
+~(_]---'
+/_(U
 	</pre>
 	</div>
 	
+
+</div>
+</div>
+
+<div class="endMenu" class="endMenuAppear">
+	<div id="endMenuTime">
+		<div id="endMenuTimeShow">
+			
+		</div>
+		<br>
+		<pre id="reactionTime">                      _   _               _   _                
+                     | | (_)             | | (_)               
+  _ __ ___  __ _  ___| |_ _  ___  _ __   | |_ _ _ __ ___   ___ 
+ | '__/ _ \/ _` |/ __| __| |/ _ \| '_ \  | __| | '_ ` _ \ / _ \
+ | | |  __/ (_| | (__| |_| | (_) | | | | | |_| | | | | | |  __/
+ |_|  \___|\__,_|\___|\__|_|\___/|_| |_|  \__|_|_| |_| |_|\___|
+                                                               
+                                                               
+		</pre>
+	</div>
 
 </div>
 
