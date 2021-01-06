@@ -1,6 +1,14 @@
+
 // default player colors
-var player1Color = "pink";
-var player2Color = "yellow";
+try{
+	var player1Color = localStorage.getItem("player1color");
+	var player2Color = localStorage.getItem("player2color");
+}
+catch{
+	var player1Color = "pink";
+	var player2Color = "yellow";
+
+}
 
 var player1Colorpicker = document.getElementById("player1color");
 var player2Colorpicker = document.getElementById("player2color");
@@ -11,11 +19,13 @@ var playerRight = null;
 var milisec = 0;
 // can I shoot rn?
 var shootPass = true;
-//
+// can I show end menu
 var endMenuVisible = false;
 
+var winner = "";
 
 
+/*insertTime("2137")*/
 
 class Player{
 	color = null;
@@ -87,6 +97,7 @@ document.addEventListener('keydown', function(event) {
 
     if(event.keyCode == 16) {
   		if (!shootPass){
+	    	winner = "left";
 	 	    playerLeft.showShot("#playerLeft");
 	    	playerRight.showKilled("#playerRight");
 	    	colorButtons("leftButton", playerLeft.color, "pressed");
@@ -102,6 +113,7 @@ document.addEventListener('keydown', function(event) {
     }
     else if(event.keyCode == 13) {
     	if (!shootPass){
+	    	winner = "right";
 	    	playerRight.showShot("#playerRight");
 	    	playerLeft.showKilled("#playerLeft");
 	    	colorButtons("rightButton", playerRight.color, "pressed");
@@ -113,7 +125,6 @@ document.addEventListener('keydown', function(event) {
 			milisec = milisec.toString()
 	    	insertTime(milisec);
 
-
     	}
     }
 
@@ -121,7 +132,9 @@ document.addEventListener('keydown', function(event) {
 
 //INIT
 window.onload = function() {
-	
+
+
+
 	playerLeft = new Player(playerOne, player1Color);
 	playerRight = new Player(playerTwo, player2Color);
 	colorButtons("leftButton", player1Color);
@@ -161,6 +174,7 @@ menuPlayerRightPre.onclick = () =>{
 
 player1Colorpicker.addEventListener('change', (event) => {
   	player1Color = player1Colorpicker.value;
+  	console.log(player1Color);
 	document.querySelector("#player1").remove()
 	
 	playerLeft.delete("#menuPlayerLeft");
@@ -170,18 +184,21 @@ player1Colorpicker.addEventListener('change', (event) => {
 	colorUpdate(1); 
 
 
+
 });
 
 
 player2Colorpicker.addEventListener('change', (event) => {
   	player2Color = player2Colorpicker.value;
 	document.querySelector("#player2").remove()
+	console.log(player2Color);
 	
 	playerRight.delete("#menuPlayerRight");
 	playerRight = new Player(playerTwo, player2Colorpicker.value);
 	playerRight.showReady("#menuPlayerRight");
 
 	colorUpdate(2); 
+	
 	
 });
 
@@ -314,17 +331,31 @@ function insertTime(time){
 				area.insertAdjacentHTML("beforeend",replace(digits[time[i]]));
 			}
 		}
-		var menu = document.querySelector(".endMenu")
+		var menu = document.querySelector(".endMenu");
 		menu.classList.add("endMenuAppear");
 		menu.style = "z-index: 11;";
 		document.documentElement.style.setProperty("--endMenuColor", "#48ff48");
 		
+		var leftImg = document.getElementById("endMenuPlayer1");
+		var rightImg = document.getElementById("endMenuPlayer2");
+
+		if (winner == "right"){
+			leftImg.insertAdjacentHTML("beforeend",replace(playerOne[4]));
+			rightImg.insertAdjacentHTML("beforeend",replace(playerTwo[3]));
+		}else if (winner == "left"){
+			leftImg.insertAdjacentHTML("beforeend",replace(playerOne[3]));
+			rightImg.insertAdjacentHTML("beforeend",replace(playerTwo[4]));
+		}
 
 
+		leftImg.style= "color: "+ playerLeft.color;
+		console.log(playerLeft.color);
+		console.log(winner);
+		rightImg.style = "color: "+playerRight.color;
 
+		localStorage.setItem("player1color",playerLeft.color);
+		localStorage.setItem("player2color",playerRight.color);
 	}
 }
-
-
 
 

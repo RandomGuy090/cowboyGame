@@ -33,7 +33,29 @@ __[-]___
  /   \\
 /     \\</pre>
 `
-];
+,`
+<pre class="playerLeft" id="player1">
+  _______
+ |       |
+(| FIRST |)
+ |  #1   |
+  \\     /
+    ---
+   _|_|_
+</pre>
+`,`
+<pre class="playerLeft" id="player1">
+    _____
+  /~/~   ~\\
+ | |       \\
+ \\ \\   #2   \\
+  \\ \\  R.I.P \\
+ --\\ \\       .\\''
+--==\\ \\     ,,i!!i,
+    ''"'',,}{,,
+</pre>
+`];
+
 
 var playerTwo = [`
 <pre class="playerRight" id="player2">
@@ -72,7 +94,32 @@ var playerTwo = [`
              /   \\
             /     \\
 </pre>
+`,`
+<pre class="playerRight" id="player2">
+  _______
+ |       |
+(| FIRST |)
+ |  #1   |
+  \\     /
+    ---
+   _|_|_
+</pre>
+`,`
+<pre class="playerRight" id="player2">
+    _____
+  /~/~   ~\\
+ | |       \\
+ \\ \\   #2   \\
+  \\ \\ R.I.P  \\
+ --\\ \\       .\\''
+--==\\ \\     ,,i!!i,
+    ''"'',,}{,,
+</pre>
 `];
+
+
+
+
 var countdown = [`<pre class="count">
   _____ ___ ____  _____  _ 
  |  ___|_ _|  _ \\| ____ | |
