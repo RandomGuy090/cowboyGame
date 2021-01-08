@@ -1,15 +1,17 @@
-
 // default player colors
-try{
-	var player1Color = localStorage.getItem("player1color");
-	var player2Color = localStorage.getItem("player2color");
-}
-catch{
-	var player1Color = "pink";
-	var player2Color = "yellow";
 
-}
 
+var player1Color = localStorage.getItem("player1color");
+var player2Color = localStorage.getItem("player2color");
+
+if (player1Color == null){
+	player1Color = "blue";
+}
+if (player2Color == null){
+	player2Color = "red";
+	}	
+
+//colorpicker
 var player1Colorpicker = document.getElementById("player1color");
 var player2Colorpicker = document.getElementById("player2color");
 //players var for object
@@ -21,16 +23,16 @@ var milisec = 0;
 var shootPass = true;
 // can I show end menu
 var endMenuVisible = false;
-
+//
 var winner = "";
 
 
-/*insertTime("2137")*/
+/*endMenu("2137")*/
 
+//Player object
 class Player{
 	color = null;
 	assets = null;
-
 
 	constructor(assets, color){
 		this.color = color;
@@ -44,6 +46,7 @@ class Player{
 		var id = this.assets[1].substring(start, end);
 		return id;
 	}
+
 	showReady(parentDiv){
 
 		var player = document.querySelector(parentDiv);
@@ -55,8 +58,8 @@ class Player{
 		document.getElementById(this.id()).style = "color: " + this.color;
 		
 	}
+
 	showShot(parentDiv){
-			//Player.showShot("#playerRight"); to run propertly
 		var id = this.id()
 		var player = document.querySelector(parentDiv);	
 
@@ -64,101 +67,93 @@ class Player{
 		player.insertAdjacentHTML("beforeend",replace(this.assets[0]));
 		document.getElementById(id).style = "color: "+ this.color;
 
-
 	}
+
 	showKilled(parentDiv){
-			//Player.showShot("#playerRight"); to run propertly
 		var id = this.id()
 		var player = document.querySelector(parentDiv);
-		
+
 		document.querySelector("#"+this.id()).remove()
 
 		player.insertAdjacentHTML("beforeend",replace(this.assets[2]));
 		document.getElementById(id).style = "color: "+ this.color;
-			
-
 	}
+
 	delete(parentDiv){
 		var node = document.querySelector(parentDiv);
 	  	while (node.lastChild) {
 	    	node.removeChild(node.lastChild);
 	  	}
-
-
 	}
-
 }
 
-
-
-
+//when key pressed
 document.addEventListener('keydown', function(event) {
 	console.log(event.keyCode);
-
+	//player left shot 16 ascii == shift
     if(event.keyCode == 16) {
   		if (!shootPass){
 	    	winner = "left";
+	    	shootPass = true;
+	 	    
 	 	    playerLeft.showShot("#playerLeft");
 	    	playerRight.showKilled("#playerRight");
-	    	colorButtons("leftButton", playerLeft.color, "pressed");
-	    	shootPass = true;
 	    	
 	    	milisec2 = Date.now() |0
 			milisec = milisec2 - milisec;
-			console.log(milisec);
 			milisec = milisec.toString()
-	    	insertTime(milisec);
+			
+	    	colorButtons("leftButton", playerLeft.color, "pressed");
+	    	endMenu(milisec);
     	}
-
     }
+    // 13 ascii == enter
     else if(event.keyCode == 13) {
+    	//player right shot
     	if (!shootPass){
 	    	winner = "right";
+	    	shootPass = true;
+	    	
 	    	playerRight.showShot("#playerRight");
 	    	playerLeft.showKilled("#playerLeft");
-	    	colorButtons("rightButton", playerRight.color, "pressed");
-	    	shootPass = true;
 	    	
 	    	milisec2 = Date.now() |0
 			milisec = milisec2 - milisec;
-			console.log(milisec);
 			milisec = milisec.toString()
-	    	insertTime(milisec);
+			
+	    	colorButtons("rightButton", playerRight.color, "pressed");
+	    	endMenu(milisec);
 
     	}
     }
 
 });
 
+
 //INIT
 window.onload = function() {
-
-
-
 	playerLeft = new Player(playerOne, player1Color);
 	playerRight = new Player(playerTwo, player2Color);
+
 	colorButtons("leftButton", player1Color);
 	colorButtons("rightButton", player2Color);
+
 	document.getElementById("menuPlayerLeftPre").style = "color: "+ player1Color+"; float: left;";
 	document.getElementById("menuPlayerRightPre").style = "color: "+ player2Color+"; float: right;";
 
-
-
 	showCowboys("#menuPlayerLeft","#menuPlayerRight");
 	replaceKeyboard("ENTR", player2Color);
-	replaceKeyboard(" |^|", player1Color);
-
-	
+	replaceKeyboard(" |^|", player1Color);	
 }
 
-//color picker
-
+//color picker events
 menuPlayerLeftPre.onclick = () =>{
 	var inp = document.getElementById("player1color");
 	inp.focus();
 	inp.click();
 
 	player1Color = inp.value
+
 }
 menuPlayerRightPre.onclick = () =>{
 	var inp = document.getElementById("player2color");
@@ -168,12 +163,15 @@ menuPlayerRightPre.onclick = () =>{
 	player1Color = inp.value
 }
 
+playAgain.onclick = () =>{
+	window.location.reload();
 
+}
 
-
-
+//updating players colors
 player1Colorpicker.addEventListener('change', (event) => {
   	player1Color = player1Colorpicker.value;
+  	
   	console.log(player1Color);
 	document.querySelector("#player1").remove()
 	
@@ -181,12 +179,10 @@ player1Colorpicker.addEventListener('change', (event) => {
 	playerLeft = new Player(playerOne, player1Colorpicker.value);
 	playerLeft.showReady("#menuPlayerLeft");
 
+	//adding color to the local storage of broweser
+	localStorage.setItem("player1color",playerLeft.color);
 	colorUpdate(1); 
-
-
-
 });
-
 
 player2Colorpicker.addEventListener('change', (event) => {
   	player2Color = player2Colorpicker.value;
@@ -197,32 +193,32 @@ player2Colorpicker.addEventListener('change', (event) => {
 	playerRight = new Player(playerTwo, player2Colorpicker.value);
 	playerRight.showReady("#menuPlayerRight");
 
+	//adding color to the local storage of broweser
+	localStorage.setItem("player2color",playerRight.color);
 	colorUpdate(2); 
-	
-	
 });
 
 function colorUpdate(player){
 	if(player == 1 ){
-	replaceKeyboard(" |^|", player1Color);
-	document.getElementById("menuPlayerLeftPre").style = "color: "+ player1Color+"; float: left;";
-	colorButtons("leftButton", player1Color);
-}else{
-	replaceKeyboard("ENTR", player2Color);
-	document.getElementById("menuPlayerRightPre").style = "color: "+ player2Color+"; float: right;";
-	colorButtons("rightButton", player2Color);
+		replaceKeyboard(" |^|", player1Color);
+		document.getElementById("menuPlayerLeftPre").style = "color: "+ player1Color+"; float: left;";
+		colorButtons("leftButton", player1Color);
+	}else{
+		replaceKeyboard("ENTR", player2Color);
+		document.getElementById("menuPlayerRightPre").style = "color: "+ player2Color+"; float: right;";
+		colorButtons("rightButton", player2Color);
+	}
 }
-}
 
 
-
-// after closing menu
+// after closing main menu (efter revolver clicked)
 startGameTrigger.onclick = () =>{
 	var node = document.getElementById("startMenu");
   	while (node.firstChild) {
     	node.removeChild(node.lastChild);
   	}
   	node.remove();
+
 	showCowboys("#playerLeft", "#playerRight");
 	counter();
 
@@ -232,12 +228,11 @@ startGameTrigger.onclick = () =>{
 function replaceKeyboard(key, colorChar){
 	const colorBlink = document.querySelectorAll("#menuKeyboard");
 
-	for (const color of colorBlink) {
+	for(const color of colorBlink) {
 	  color.innerHTML = color.innerHTML
 	    .replaceAll(key, '<span class="blinker" style="color: '+ colorChar+';">'+ key+'</span>');
 	}
 }
-
 
 function replace(str){
 	str = str.replaceAll("*","`");
@@ -255,13 +250,13 @@ function showCowboys(div1, div2){
 function counter(){
 	var count = document.querySelector("#countdown");
 
-	for (var i=0; i<= countdown.length; i++) {
+	for(var i=0; i<= countdown.length; i++) {
 	  (function(i) {
 	    setTimeout(function() { 
 	    	 try{
 				document.querySelector(".count").remove();
 			}catch{
-				
+	
 			}
 				count.insertAdjacentHTML("beforeend",replace(countdown[countdown.length-i]));
 	  			if(countdown.length == i){
@@ -288,8 +283,7 @@ function colorButtons(buttnId, color, status=0){
 
 }
 
-
-function insertTime(time){
+function timeProcessing(time){
 
 	if (time.length>3){
 		switch (time.length){
@@ -308,12 +302,40 @@ function insertTime(time){
 	time = time.substring(0,5);
 	time += "s";
 	}else{
-		
-
 		time += "ms";
 	}
-	console.log(time);
-	console.log(time);
+	return time;
+}
+
+function appearMenu(){
+	var menu = document.querySelector(".endMenu");
+	
+	menu.classList.add("endMenuAppear");
+	menu.style = "z-index: 11;";
+
+	document.documentElement.style.setProperty("--endMenuColor", "#48ff48");
+}
+
+function showEndMenuImages(){
+	var leftImg = document.getElementById("endMenuPlayer1");
+	var rightImg = document.getElementById("endMenuPlayer2");
+
+	if (winner == "right"){
+		leftImg.insertAdjacentHTML("beforeend",replace(playerOne[4]));
+		rightImg.insertAdjacentHTML("beforeend",replace(playerTwo[3]));
+	}else if (winner == "left"){
+		leftImg.insertAdjacentHTML("beforeend",replace(playerOne[3]));
+		rightImg.insertAdjacentHTML("beforeend",replace(playerTwo[4]));
+	}
+	leftImg.style= "color: "+ playerLeft.color;
+	rightImg.style = "color: "+playerRight.color;
+}
+
+function endMenu(time){
+
+	time = timeProcessing(time);
+	
+
 	if (endMenuVisible == false) {
 		console.log(time);
 		endMenuVisible = true;
@@ -326,35 +348,14 @@ function insertTime(time){
 				area.insertAdjacentHTML("beforeend",replace(digits[11]));
 			}else if(time[i] == "s"){
 				area.insertAdjacentHTML("beforeend",replace(digits[12]));
-			
 			}else{
 				area.insertAdjacentHTML("beforeend",replace(digits[time[i]]));
 			}
 		}
-		var menu = document.querySelector(".endMenu");
-		menu.classList.add("endMenuAppear");
-		menu.style = "z-index: 11;";
-		document.documentElement.style.setProperty("--endMenuColor", "#48ff48");
-		
-		var leftImg = document.getElementById("endMenuPlayer1");
-		var rightImg = document.getElementById("endMenuPlayer2");
 
-		if (winner == "right"){
-			leftImg.insertAdjacentHTML("beforeend",replace(playerOne[4]));
-			rightImg.insertAdjacentHTML("beforeend",replace(playerTwo[3]));
-		}else if (winner == "left"){
-			leftImg.insertAdjacentHTML("beforeend",replace(playerOne[3]));
-			rightImg.insertAdjacentHTML("beforeend",replace(playerTwo[4]));
-		}
+	appearMenu()
+	showEndMenuImages()
 
-
-		leftImg.style= "color: "+ playerLeft.color;
-		console.log(playerLeft.color);
-		console.log(winner);
-		rightImg.style = "color: "+playerRight.color;
-
-		localStorage.setItem("player1color",playerLeft.color);
-		localStorage.setItem("player2color",playerRight.color);
 	}
 }
 
