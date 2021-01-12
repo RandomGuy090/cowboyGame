@@ -220,6 +220,10 @@ startGameTrigger.onclick = () =>{
   	node.remove();
 
 	showCowboys("#playerLeft", "#playerRight");
+	
+	var scene = document.querySelector(".scene");
+	scene.style = "margin-top: -62vh;";
+
 	counter();
 
 }
