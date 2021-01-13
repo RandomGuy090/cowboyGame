@@ -100,6 +100,9 @@
 
 			z-index: 0;
 		}
+		.count{
+			margin-top: 0;
+		}
 		.menuButton{
 			font-size: 1.5vh;
 			z-index: 1;
@@ -131,7 +134,7 @@
 			height: 105vh;
 			width: 98vw;
 			/*margin-top: -95vh;*/
-			margin-top: -90vh;
+			margin-top: -98vh;
 			background-color: black;
 		}
 		.menuPlayerPanel{
@@ -229,8 +232,10 @@
 			animation: menuAppear 2s linear ;
 		}
 		#endMenuPlayer1{
-			position: relative;
+			/*position: relative;*/
+			position: fixed;
 			color:white;
+			background-color: transparent;
 			font-size: 1.5vw;
 			margin-left: 5vw;
 			margin-top: -1vh;
@@ -241,7 +246,8 @@
 		}
 		#endMenuPlayer2{
 			position: relative;
-			color:white;
+			background-color: transparent;marg
+			color: white;
 			font-size: 1.5vw;
 			float: right;
 			margin-right: 9vw;
@@ -251,9 +257,9 @@
 		}
 		.playAgain{
 			position: relative;
-			height: 7vh;
-			width: 90%;
-			margin-top: 35vh;
+			height: 11vh;
+			width: 90%; 
+			margin-top: 30vh;
 			margin-left: 3vw;
 			border: 1px solid var(--endMenuColor);
 			border-radius: 5px;
