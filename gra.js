@@ -3,6 +3,7 @@
 
 var player1Color = localStorage.getItem("player1color");
 var player2Color = localStorage.getItem("player2color");
+console.log(player1Color);
 
 if (player1Color == null){
 	player1Color = "blue";
@@ -185,6 +186,7 @@ player1Colorpicker.addEventListener('change', (event) => {
 });
 
 player2Colorpicker.addEventListener('change', (event) => {
+
   	player2Color = player2Colorpicker.value;
 	document.querySelector("#player2").remove()
 	console.log(player2Color);
@@ -361,6 +363,12 @@ function endMenu(time){
 	showEndMenuImages()
 
 	}
+}
+
+function wipeLocalStorage(){
+	localStorage.removeItem("player1color", null);
+	localStorage.removeItem("player2color", null);
+
 }
 
 
